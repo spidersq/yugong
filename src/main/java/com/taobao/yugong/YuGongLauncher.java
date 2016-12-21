@@ -1,5 +1,8 @@
 package com.taobao.yugong;
 
+import com.taobao.yugong.common.version.VersionInfo;
+import com.taobao.yugong.controller.YuGongController;
+
 import java.io.FileInputStream;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -8,15 +11,16 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.taobao.yugong.common.version.VersionInfo;
-import com.taobao.yugong.controller.YuGongController;
-
 public class YuGongLauncher {
 
     private static final String CLASSPATH_URL_PREFIX = "classpath:";
     private static final Logger logger               = LoggerFactory.getLogger(YuGongLauncher.class);
 
     public static void main(String[] args) throws Throwable {
+        launch();
+    }
+
+    public static void launch(){
         try {
             String conf = System.getProperty("yugong.conf", "classpath:yugong.properties");
             PropertiesConfiguration config = new PropertiesConfiguration();

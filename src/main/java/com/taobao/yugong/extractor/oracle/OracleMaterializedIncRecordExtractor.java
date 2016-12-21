@@ -1,24 +1,5 @@
 package com.taobao.yugong.extractor.oracle;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.MDC;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.MigrateMap;
 import com.taobao.yugong.applier.AbstractRecordApplier.TableSqlUnit;
@@ -40,6 +21,25 @@ import com.taobao.yugong.common.model.record.Record;
 import com.taobao.yugong.common.utils.thread.ExecutorTemplate;
 import com.taobao.yugong.common.utils.thread.NamedThreadFactory;
 import com.taobao.yugong.exception.YuGongException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.MDC;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 
 /**
  * 基于oracle物化视图的增量实现

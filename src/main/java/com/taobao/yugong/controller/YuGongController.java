@@ -1,26 +1,5 @@
 package com.taobao.yugong.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import javax.sql.DataSource;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.MDC;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.google.common.collect.Lists;
 import com.taobao.yugong.applier.AllRecordApplier;
 import com.taobao.yugong.applier.CheckRecordApplier;
@@ -63,6 +42,27 @@ import com.taobao.yugong.positioner.MemoryRecordPositioner;
 import com.taobao.yugong.positioner.RecordPositioner;
 import com.taobao.yugong.translator.DataTranslator;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.MDC;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 /**
  * 整个迁移流程调度控制
  * 
@@ -79,6 +79,7 @@ public class YuGongController extends AbstractYuGongLifeCycle {
     private DbType                   sourceDbType      = DbType.ORACLE;
     private DbType                   targetDbType      = DbType.MYSQL;
     private File                     translatorDir;
+    private String                   packageName ;
     private AlarmService             alarmService;
 
     private TableController          tableController;
@@ -109,6 +110,7 @@ public class YuGongController extends AbstractYuGongLifeCycle {
         this.sourceDbType = DbType.valueOf(StringUtils.upperCase(config.getString("yugong.database.source.type")));
         this.targetDbType = DbType.valueOf(StringUtils.upperCase(config.getString("yugong.database.target.type")));
         this.translatorDir = new File(config.getString("yugong.translator.dir", "../conf/translator"));
+        this.packageName = config.getString("yugong.translator.package", DataTranslator.class.getPackage().getName());
         this.globalContext = initGlobalContext();
         this.alarmService = initAlarmService();
 
@@ -170,7 +172,7 @@ public class YuGongController extends AbstractYuGongLifeCycle {
             // 可能在装载DRDS时,已经加载了一次translator处理
             DataTranslator translator = tableHolder.translator;
             if (translator == null) {
-                translator = choseTranslator(tableHolder);
+                translator = chooseTranslator(tableHolder);
             }
             YuGongInstance instance = new YuGongInstance(context);
             StatAggregation statAggregation = new StatAggregation(statBufferSize, statPrintInterval);
@@ -379,7 +381,7 @@ public class YuGongController extends AbstractYuGongLifeCycle {
         }
     }
 
-    private DataTranslator choseTranslator(TableHolder tableHolder) {
+    private DataTranslator chooseTranslator(TableHolder tableHolder) {
         try {
             return buildTranslator(tableHolder.table.getName());
         } catch (Exception e) {
@@ -390,10 +392,13 @@ public class YuGongController extends AbstractYuGongLifeCycle {
     private DataTranslator buildTranslator(String name) throws Exception {
         String tableName = YuGongUtils.toPascalCase(name);
         String translatorName = tableName + "DataTranslator";
-        String packageName = DataTranslator.class.getPackage().getName();
         Class clazz = null;
         try {
-            clazz = Class.forName(packageName + "." + translatorName);
+            try{
+                clazz = Class.forName(packageName + "." + translatorName);
+            }catch (ClassNotFoundException e){
+                clazz=Class.forName(packageName + "." + tableName);
+            }
         } catch (ClassNotFoundException e) {
             File file = new File(translatorDir, translatorName + ".java");
             if (!file.exists()) {
@@ -416,7 +421,7 @@ public class YuGongController extends AbstractYuGongLifeCycle {
             String mode = config.getString("yugong.run.positioner", "FILE");
             if (StringUtils.equalsIgnoreCase("FILE", mode)) {
                 FileMixedRecordPositioner positioner = new FileMixedRecordPositioner();
-                positioner.setDataDir(new File("../conf/positioner")); // 使用了../相对目录，启动脚本会确保user.dir为bin目录
+                positioner.setDataDir(new File(System.getProperty("user.home")+"/conf/positioner")); // 使用了../相对目录，启动脚本会确保user.dir为bin目录
                 positioner.setDataFileName(tableHolder.table.getSchema() + "_" + tableHolder.table.getName() + ".dat");
                 return positioner;
             } else {

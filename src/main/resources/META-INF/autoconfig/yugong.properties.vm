@@ -1,0 +1,68 @@
+yugong.database.source.username=${yugong_database_source_username}
+yugong.database.source.password=${yugong_database_source_password}
+yugong.database.source.type=${yugong_database_source_type}
+yugong.database.source.url=${yugong_database_source_url}
+yugong.database.source.encode=${yugong_database_source_encode}
+yugong.database.source.poolSize=${yugong_database_source_poolSize}
+
+yugong.database.target.url=${yugong_database_target_url}
+yugong.database.target.username=${yugong_database_target_username}
+yugong.database.target.password=${yugong_database_target_password}
+yugong.database.target.type=${yugong_database_target_type}
+yugong.database.target.encode=${yugong_database_target_encode}
+yugong.database.target.poolSize=${yugong_database_target_poolSize}
+
+yugong.table.batchApply=${yugong_table_batchApply}
+yugong.table.onceCrawNum=${yugong_table_onceCrawNum}
+yugong.table.tpsLimit=${yugong_table_tpsLimit}
+# use connection default schema
+yugong.table.ignoreSchema=${yugong_table_ignoreSchema}
+# skip Applier Load Db failed data
+yugong.table.skipApplierException=${yugong_table_skipApplierException}
+
+#yugong.table.white
+yugong.table.white=${yugong_table_white}
+yugong.table.black=${yugong_table_black}
+
+# tables use multi-thread enable or disable
+yugong.table.concurrent.enable=${yugong_table_concurrent_enable}
+# tables use multi-thread size
+yugong.table.concurrent.size=${yugong_table_concurrent_size}
+# retry times
+yugong.table.retry.times=${yugong_table_retry_times}
+# retry interval or sleep time (ms)
+yugong.table.retry.interval=${yugong_table_retry_interval}
+# MARK/FULL/INC/ALL(REC+FULL+INC)/CHECK/CLEAR
+yugong.table.mode=${yugong_table_mode}
+
+
+# yugong extractor
+yugong.extractor.dump=${yugong_extractor_dump}
+yugong.extractor.concurrent.enable=${yugong_extractor_concurrent_enable}
+yugong.extractor.concurrent.global=${yugong_extractor_concurrent_global}
+yugong.extractor.concurrent.size=${yugong_extractor_concurrent_size}
+yugong.extractor.noupdate.sleep=${yugong_extractor_noupdate_sleep}
+yugong.extractor.noupdate.thresold=${yugong_extractor_noupdate_thresold}
+yugong.extractor.once=${yugong_extractor_once}
+
+# yugong applier
+yugong.applier.concurrent.enable=${yugong_applier_concurrent_enable}
+yugong.applier.concurrent.global=${yugong_applier_concurrent_global}
+yugong.applier.concurrent.size=${yugong_applier_concurrent_size}
+yugong.applier.dump=${yugong_applier_dump}
+
+# yugong translator
+yugong.translator.package=${yugong_translator_package}
+# stats
+yugong.stat.print.interval=${yugong_stat_print_interval}
+yugong.progress.print.interval=${yugong_progress_print_interval}
+
+# alarm email
+yugong.alarm.email.host=${yugong_alarm_email_host}
+yugong.alarm.email.username=${yugong_alarm_email_username}
+yugong.alarm.email.password=${yugong_alarm_email_password}
+yugong.alarm.email.stmp.port=${yugong_alarm_email_stmp_port}
+yugong.alarm.email.ssl.support=${yugong_alarm_email_ssl_support}
+yugong.alarm.receiver=${yugong_alarm_receiver}
+
+#yugong.extractor.sql.shift_case=${yugong_extractor_sql_shift_case}

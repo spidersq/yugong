@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config description="自动配置：yugong.deploy">
+	<group name="yugong" description="yugong配置">
+		<property name="yugong.database.source.username" defaultValue="xxxxx"  description=""/>
+		<property name="yugong.database.source.password" defaultValue="xxxxxx"  description=""/>
+		<property name="yugong.database.source.type" defaultValue="ORACLE"  description=""/>
+		<property name="yugong.database.source.url" defaultValue="jdbc:oracle:thin:@192.168.1.1:1521:orcl"  description=""/>
+		<property name="yugong.database.source.encode" defaultValue="UTF-8"  description=""/>
+		<property name="yugong.database.source.poolSize" defaultValue="30"  description=""/>
+		<property name="yugong.database.target.url" defaultValue="jdbc:mysql://192.168.1.1:3306/xxx"  description=""/>
+		<property name="yugong.database.target.username" defaultValue="xxxxx"  description=""/>
+		<property name="yugong.database.target.password" defaultValue="xxxxx"  description=""/>
+		<property name="yugong.database.target.type" defaultValue="MYSQL"  description=""/>
+		<property name="yugong.database.target.encode" defaultValue="UTF-8"  description=""/>
+		<property name="yugong.database.target.poolSize" defaultValue="30"  description=""/>
+		<property name="yugong.table.batchApply" defaultValue="true"  description=""/>
+		<property name="yugong.table.onceCrawNum" defaultValue="1000"  description=""/>
+		<property name="yugong.table.tpsLimit" defaultValue="0"  description=""/>
+		<property name="yugong.table.ignoreSchema" defaultValue="false"  description=""/>
+		<property name="yugong.table.skipApplierException" defaultValue="false"  description=""/>
+		<property name="yugong.table.white" defaultValue="white"  description=""/>
+		<property name="yugong.table.black" defaultValue="black"  description=""/>
+		<property name="yugong.table.concurrent.enable" defaultValue="true"  description=""/>
+		<property name="yugong.table.concurrent.size" defaultValue="10"  description=""/>
+		<property name="yugong.table.retry.times" defaultValue="3"  description=""/>
+		<property name="yugong.table.retry.interval" defaultValue="1000"  description=""/>
+		<property name="yugong.table.mode" defaultValue="ALL"  description=""/>
+		<property name="yugong.extractor.dump" defaultValue="false"  description=""/>
+		<property name="yugong.extractor.concurrent.enable" defaultValue="true"  description=""/>
+		<property name="yugong.extractor.concurrent.global" defaultValue="true"  description=""/>
+		<property name="yugong.extractor.concurrent.size" defaultValue="5"  description=""/>
+		<property name="yugong.extractor.noupdate.sleep" defaultValue="1000"  description=""/>
+		<property name="yugong.extractor.noupdate.thresold" defaultValue="3"  description=""/>
+		<property name="yugong.extractor.once" defaultValue="false"  description=""/>
+		<property name="yugong.applier.concurrent.enable" defaultValue="true"  description=""/>
+		<property name="yugong.applier.concurrent.global" defaultValue="true"  description=""/>
+		<property name="yugong.applier.concurrent.size" defaultValue="5"  description=""/>
+		<property name="yugong.applier.dump" defaultValue="false"  description=""/>
+		<property name="yugong.translator.package" defaultValue="com.taobao.yugong.translator"  description=""/>
+		<property name="yugong.stat.print.interval" defaultValue="5"  description=""/>
+		<property name="yugong.progress.print.interval" defaultValue="1"  description=""/>
+		<property name="yugong.alarm.email.host" defaultValue="mail.xxxx.com"  description=""/>
+		<property name="yugong.alarm.email.username" defaultValue="xxxx@xxx.com"  description=""/>
+		<property name="yugong.alarm.email.password" defaultValue="xxx"  description=""/>
+		<property name="yugong.alarm.email.stmp.port" defaultValue="25"  description=""/>
+		<property name="yugong.alarm.receiver" defaultValue="xx@xxxx.com"  description="" />
+		<property name="yugong.alarm.email.ssl.support" defaultValue="true"  description="" />
+		<!--<property name="yugong.extractor.sql.shift_case" defaultValue="select /*+parallel(t)*/ {0} from {1}.{2} t"  description="" />-->
+	</group>
+
+
+	<script>
+		<generate template="yugong.properties.vm" destfile="yugong.properties" charset="UTF-8" />
+	</script>
+</config>
