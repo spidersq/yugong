@@ -65,4 +65,6 @@ yugong.alarm.email.stmp.port=${yugong_alarm_email_stmp_port}
 yugong.alarm.email.ssl.support=${yugong_alarm_email_ssl_support}
 yugong.alarm.receiver=${yugong_alarm_receiver}
 
-#yugong.extractor.sql.shift_case=${yugong_extractor_sql_shift_case}
+
+yugong.extractor.sql.ORDER_INFO=${yugong_extractor_sql_ORDER_INFO}
+yugong.extractor.once.ORDER_INFO=${yugong_extractor_once_ORDER_INFO}
